@@ -1,1 +1,1 @@
-# wyked-IT-Solutions
+# Wyked-IT-Solutions
