@@ -52,15 +52,25 @@
         }
         
         .logo {
-            font-size: 24px;
+            /* These styles are more for the container or if you had text as a fallback */
+            display: flex; /* Added for logo alignment */
+            align-items: center; /* Vertically centers the logo */
+            font-size: 24px; /* Fallback for text, or for fine-tuning space around logo */
             font-weight: 700;
             color: var(--primary);
         }
-        
+
         .logo span {
-            color: var(--accent);
+            color: var(--accent); /* Only applies if you keep the text 'Wyked IT Solutions' */
         }
         
+        /* NEW: Styles for the logo image */
+        .header-logo {
+            max-height: 50px; /* Adjust this value as needed */
+            width: auto;      /* Maintain aspect ratio */
+            display: block;   /* Remove extra space below image */
+        }
+
         .nav-links {
             display: flex;
             gap: 30px;
@@ -486,7 +496,9 @@
     <header>
         <div class="container">
             <nav>
-                <div class="logo">Wyked <span>IT Solutions</span></div>
+                <div class="logo">
+                    <img src="https://ibb.co/gK428Lb" alt="Wyked IT Solutions Logo" class="header-logo">
+                </div>
                 <button class="mobile-menu-btn">
                     <i class="fas fa-bars"></i>
                 </button>
@@ -834,11 +846,11 @@
             // Change slide every 5 seconds
             setInterval(nextSlide, 5000);
 
-            // Initialize payment details display
-            displayPaymentDetails(); // Call on load to hide/show initially
+            // Initialize payment details display (call on load to ensure it's empty or shows default if needed)
+            displayPaymentDetails(); 
         });
 
-        // NEW: Function to display payment details based on selection
+        // Function to display payment details based on selection
         const paymentMethodSelect = document.getElementById('paymentMethod');
         const paymentDetailsDisplay = document.getElementById('paymentDetailsDisplay');
 
@@ -915,7 +927,7 @@ Please respond to this inquiry at your earliest convenience.`;
             
             // Optional: Reset form after submission
             document.getElementById('serviceRequestForm').reset();
-            // Reset payment details display after form reset
+            // Clear payment details display after form reset
             paymentDetailsDisplay.innerHTML = ''; 
             
             return false;
