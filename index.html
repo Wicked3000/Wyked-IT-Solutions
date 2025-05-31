@@ -392,6 +392,11 @@
             height: 150px;
             resize: vertical;
         }
+
+        .contact-form button[type="submit"] {
+            width: 100%;
+            cursor: pointer;
+        }
         
         /* Footer */
         footer {
@@ -720,11 +725,11 @@
                     </div>
                 </div>
                 <div class="contact-form">
-                    <form id="whatsappForm">
-                        <input type="text" id="name" placeholder="Your Name" required>
-                        <input type="email" id="email" placeholder="Your Email">
-                        <input type="tel" id="phone" placeholder="Phone Number" required>
-                        <select id="service" required>
+                    <form id="serviceRequestForm">
+                        <input type="text" id="name" name="name" placeholder="Your Name" required>
+                        <input type="email" id="email" name="email" placeholder="Your Email">
+                        <input type="tel" id="phone" name="phone" placeholder="Phone Number" required>
+                        <select id="service" name="service" required>
                             <option value="">Select Service</option>
                             <optgroup label="Repair Services">
                                 <option value="Virus & Malware Removal (80 PGK)">Virus & Malware Removal (80 PGK)</option>
@@ -741,8 +746,8 @@
                                 <option value="IT Training (80 PGK/hour)">IT Training (80 PGK/hour)</option>
                             </optgroup>
                         </select>
-                        <textarea id="message" placeholder="Describe your issue or request"></textarea>
-                        <button type="button" class="btn" onclick="sendToWhatsApp()">Request Service via WhatsApp</button>
+                        <textarea id="message" name="message" placeholder="Describe your issue or request"></textarea>
+                        <button type="submit" class="btn">Request Service via WhatsApp</button>
                     </form>
                 </div>
             </div>
@@ -812,7 +817,9 @@
         });
 
         // WhatsApp Form Submission
-        function sendToWhatsApp() {
+        function sendToWhatsApp(event) {
+            event.preventDefault();
+            
             const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
             const phone = document.getElementById('phone').value;
@@ -821,25 +828,41 @@
             
             // Validate required fields
             if (!name || !phone || !service) {
-                alert('Please fill in all required fields');
-                return;
+                alert('Please fill in all required fields (Name, Phone, and Service)');
+                return false;
+            }
+            
+            // Validate phone number format (basic validation)
+            if (!/^[0-9+\s]+$/.test(phone)) {
+                alert('Please enter a valid phone number');
+                return false;
             }
             
             const whatsappNumber = "67581908393"; // REPLACE WITH YOUR ACTUAL WHATSAPP NUMBER
             
             const formattedMessage = `New Service Request from Wyked IT Solutions Website:
-            
+
 Name: ${name}
 Phone: ${phone}
 Email: ${email || 'Not provided'}
 
 Service Needed: ${service}
 
-Message: ${message || 'No additional details'}`;
+Message: ${message || 'No additional details'}
+
+Please respond to this inquiry at your earliest convenience.`;
 
             const encodedMessage = encodeURIComponent(formattedMessage);
             window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
+            
+            // Optional: Reset form after submission
+            document.getElementById('serviceRequestForm').reset();
+            
+            return false;
         }
+
+        // Add event listener to form
+        document.getElementById('serviceRequestForm').addEventListener('submit', sendToWhatsApp);
     </script>
 </body>
 </html>
