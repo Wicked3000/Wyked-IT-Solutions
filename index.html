@@ -937,5 +937,192 @@ Please respond to this inquiry at your earliest convenience.`;
         // Add event listener to form
         document.getElementById('serviceRequestForm').addEventListener('submit', sendToWhatsApp);
     </script>
+    
+    <!--whats app-->
+    
+
+        <script>
+            // Mobile Menu Toggle
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const navLinks = document.querySelector('.nav-links');
+            
+            mobileMenuBtn.addEventListener('click', () => {
+                navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+            });
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    if (window.innerWidth <= 768) {
+                        navLinks.style.display = 'none';
+                    }
+                });
+            });
+            
+            // Responsive adjustments
+            window.addEventListener('resize', () => {
+                if (window.innerWidth > 768) {
+                    navLinks.style.display = 'flex';
+                } else {
+                    navLinks.style.display = 'none';
+                }
+            });
+            
+            // Slideshow functionality
+            document.addEventListener('DOMContentLoaded', function() {
+                const slides = document.querySelectorAll('.slide');
+                let currentSlide = 0;
+                
+                function nextSlide() {
+                    slides[currentSlide].classList.remove('active');
+                    currentSlide = (currentSlide + 1) % slides.length;
+                    slides[currentSlide].classList.add('active');
+                }
+                
+                // Change slide every 5 seconds
+                setInterval(nextSlide, 5000);
+
+                // Initialize payment details display (call on load to ensure it's empty or shows default if needed)
+                displayPaymentDetails(); 
+            });
+
+            // Function to display payment details based on selection
+            const paymentMethodSelect = document.getElementById('paymentMethod');
+            const paymentDetailsDisplay = document.getElementById('paymentDetailsDisplay');
+
+            function displayPaymentDetails() {
+                const selectedMethod = paymentMethodSelect.value;
+                let detailsHtml = '';
+
+                if (selectedMethod === 'Cash') {
+                    detailsHtml = `
+                        <p><strong><i class="fas fa-money-bill-wave"></i> Cash Payment:</strong></p>
+                        <p>Accepted for all services. Please ensure you have the exact amount ready if possible, especially for on-site services. Change might be limited at times.</p>
+                    `;
+                } else if (selectedMethod === 'Bank Transfer') {
+                    detailsHtml = `
+                        <p><strong><i class="fas fa-bank"></i> Bank Transfer (EFT) Details:</strong></p>
+                        <p>For your convenience, we also accept payments via Bank Transfer. Payments must be processed *before* or *immediately after* service completion.</p>
+                        <p>
+                            **Bank Name:** Example PNG Bank<br>
+                            **Account Name:** Wyked IT Solutions Ltd<br>
+                            **Account Number:** 1234567890<br>
+                            **BSB:** 088-000 (Example)<br>
+                            *Please use your Name or Invoice Number as the payment reference.*
+                        </p>
+                    `;
+                }
+
+                paymentDetailsDisplay.innerHTML = detailsHtml;
+            }
+
+            // Add event listener for payment method change
+            paymentMethodSelect.addEventListener('change', displayPaymentDetails);
+
+
+            // WhatsApp Form Submission
+            function sendToWhatsApp(event) {
+                event.preventDefault();
+                
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const phone = document.getElementById('phone').value;
+                const service = document.getElementById('service').value;
+                const paymentMethod = document.getElementById('paymentMethod').value; 
+                const message = document.getElementById('message').value;
+                
+                // Validate required fields
+                if (!name || !phone || !service || !paymentMethod) { 
+                    alert('Please fill in all required fields (Name, Phone, Service, and Preferred Payment Method).');
+                    return false;
+                }
+                
+                // Validate phone number format (basic validation)
+                if (!/^[0-9+\s]+$/.test(phone)) {
+                    alert('Please enter a valid phone number');
+                    return false;
+                }
+                
+                const whatsappNumber = "67581908393"; // REPLACE WITH YOUR ACTUAL WHATSAPP NUMBER
+                
+                const formattedMessage = `New Service Request from Wyked IT Solutions Website:
+
+Name: ${name}
+Phone: ${phone}
+Email: ${email || 'Not provided'}
+
+Service Needed: ${service}
+Preferred Payment Method: ${paymentMethod}
+
+Message: ${message || 'No additional details'}
+
+Please respond to this inquiry at your earliest convenience.`;
+
+                const encodedMessage = encodeURIComponent(formattedMessage);
+                window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
+                
+                // Optional: Reset form after submission
+                document.getElementById('serviceRequestForm').reset();
+                // Clear payment details display after form reset
+                paymentDetailsDisplay.innerHTML = ''; 
+                
+                return false;
+            }
+
+            // Add event listener to form
+            document.getElementById('serviceRequestForm').addEventListener('submit', sendToWhatsApp);
+        </script>
+
+        <script>
+            var url = 'https://cdn.waplus.io/waplus-crm/settings/ossembed.js';
+            var s = document.createElement('script');
+            s.type = 'text/javascript';
+            s.async = true;
+            s.src = url;
+            var options = {
+                "enabled": true,
+                "chatButtonSetting": {
+                    "backgroundColor": "#16BE45",
+                    "ctaText": "Message Us",
+                    "borderRadius": "8",
+                    "marginLeft": "20",
+                    "marginBottom": "20",
+                    "marginRight": "20",
+                    "position": "right",
+                    "textColor": "#ffffff",
+                    "phoneNumber": "", // This might be overridden by brandSetting.phoneNumber
+                    "messageText": "👋🏻Hello",
+                    "trackClick": true
+                },
+                "brandSetting": {
+                    "brandName": "WAPlus Team", // This will be the name shown in the chat header
+                    "brandSubTitle": "Replies within 1 day", // Subtitle in the chat header
+                    "headerTextColor": "#ffffff", // Corrected the extra '+'
+                    "brandImg": "https://scrm-data-us-oss.oss-us-west-1.aliyuncs.com/sender/whatsapp_replace_crisp/logo.png", // Your brand logo for the chat header
+                    "welcomeText": "Hi, there!\nHow can I help you?", // Initial message when chat is opened
+                    "messageText": "Hello, I have a question about {{page_link}}", // Pre-filled message for the user to send
+                    "backgroundColor": "#0a5f54", // Chat header background color
+                    "ctaText": "Start Chat", // Text on the "Start Chat" button inside the widget
+                    "borderRadius": "20",
+                    "autoShow": false, // Set to true if you want it to pop up automatically
+                    "btnColor": "#16BE45", // The color of the main floating button
+                    "phoneNumber": "+67581908393", // Your WhatsApp number with country code and +
+                    "trackClick": true
+                }
+            }
+            s.onload = function() {
+                CreateWhatsappChatWidget(options);
+            };
+            var x = document.getElementsByTagName('script')[0];
+            x.parentNode.insertBefore(s, x);
+        </script>
+    
 </body>
 </html>
