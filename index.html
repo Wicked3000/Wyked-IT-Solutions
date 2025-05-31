@@ -720,29 +720,29 @@
                     </div>
                 </div>
                 <div class="contact-form">
-                    <form>
-                        <input type="text" placeholder="Your Name" required>
-                        <input type="email" placeholder="Your Email">
-                        <input type="tel" placeholder="Phone Number" required>
-                        <select required>
+                    <form id="whatsappForm">
+                        <input type="text" id="name" placeholder="Your Name" required>
+                        <input type="email" id="email" placeholder="Your Email">
+                        <input type="tel" id="phone" placeholder="Phone Number" required>
+                        <select id="service" required>
                             <option value="">Select Service</option>
                             <optgroup label="Repair Services">
-                                <option value="virus">Virus & Malware Removal (80 PGK)</option>
-                                <option value="password">Windows Password Reset (50 PGK)</option>
-                                <option value="recovery">Data Recovery (100 PGK)</option>
-                                <option value="reinstall">Windows Reinstallation (120-150 PGK)</option>
+                                <option value="Virus & Malware Removal (80 PGK)">Virus & Malware Removal (80 PGK)</option>
+                                <option value="Windows Password Reset (50 PGK)">Windows Password Reset (50 PGK)</option>
+                                <option value="Data Recovery (100 PGK)">Data Recovery (100 PGK)</option>
+                                <option value="Windows Reinstallation (120-150 PGK)">Windows Reinstallation (120-150 PGK)</option>
                             </optgroup>
                             <optgroup label="Setup Services">
-                                <option value="newpc">New PC Setup (150 PGK)</option>
-                                <option value="network">Network Setup (120 PGK)</option>
+                                <option value="New PC Setup (150 PGK)">New PC Setup (150 PGK)</option>
+                                <option value="Network Setup (120 PGK)">Network Setup (120 PGK)</option>
                             </optgroup>
                             <optgroup label="Other Services">
-                                <option value="onsite">On-Site Service (30 PGK)</option>
-                                <option value="training">IT Training (80 PGK/hour)</option>
+                                <option value="On-Site Service (30 PGK)">On-Site Service (30 PGK)</option>
+                                <option value="IT Training (80 PGK/hour)">IT Training (80 PGK/hour)</option>
                             </optgroup>
                         </select>
-                        <textarea placeholder="Describe your issue or request"></textarea>
-                        <button type="submit" class="btn">Request Service</button>
+                        <textarea id="message" placeholder="Describe your issue or request"></textarea>
+                        <button type="button" class="btn" onclick="sendToWhatsApp()">Request Service via WhatsApp</button>
                     </form>
                 </div>
             </div>
@@ -810,6 +810,36 @@
             // Change slide every 5 seconds
             setInterval(nextSlide, 5000);
         });
+
+        // WhatsApp Form Submission
+        function sendToWhatsApp() {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const service = document.getElementById('service').value;
+            const message = document.getElementById('message').value;
+            
+            // Validate required fields
+            if (!name || !phone || !service) {
+                alert('Please fill in all required fields');
+                return;
+            }
+            
+            const whatsappNumber = "67581908393"; // REPLACE WITH YOUR ACTUAL WHATSAPP NUMBER
+            
+            const formattedMessage = `New Service Request from Wyked IT Solutions Website:
+            
+Name: ${name}
+Phone: ${phone}
+Email: ${email || 'Not provided'}
+
+Service Needed: ${service}
+
+Message: ${message || 'No additional details'}`;
+
+            const encodedMessage = encodeURIComponent(formattedMessage);
+            window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
+        }
     </script>
 </body>
 </html>
