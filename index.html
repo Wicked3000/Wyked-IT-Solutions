@@ -52,23 +52,23 @@
         }
         
         .logo {
-            /* These styles are more for the container or if you had text as a fallback */
-            display: flex; /* Added for logo alignment */
-            align-items: center; /* Vertically centers the logo */
-            font-size: 24px; /* Fallback for text, or for fine-tuning space around logo */
+            display: flex; /* Makes the logo image and text sit side-by-side */
+            align-items: center; /* Vertically centers the items within the logo div */
+            font-size: 24px; /* Base font size for the text part */
             font-weight: 700;
             color: var(--primary);
+            gap: 8px; /* Adds a small gap between the image and the text */
         }
 
         .logo span {
-            color: var(--accent); /* Only applies if you keep the text 'Wyked IT Solutions' */
+            color: var(--accent); /* Styles "IT Solutions" */
         }
         
-        /* NEW: Styles for the logo image */
+        /* Styles for the logo image */
         .header-logo {
             max-height: 50px; /* Adjust this value as needed */
             width: auto;      /* Maintain aspect ratio */
-            display: block;   /* Remove extra space below image */
+            display: block;   /* Ensures image behaves well in flex container */
         }
 
         .nav-links {
@@ -497,7 +497,8 @@
         <div class="container">
             <nav>
                 <div class="logo">
-                    <img src="https://i.ibb.co/L7NFyXD/Untitled33-20250531133340.png" alt="Wyked IT Solutions Logo" class="header-logo">
+                    <img src="https://i.ibb.co/L7NFyXD/Untitled33-20250531133340.png alt="Wyked IT Solutions Logo" class="header-logo">
+                    Wyked <span>IT Solutions</span>
                 </div>
                 <button class="mobile-menu-btn">
                     <i class="fas fa-bars"></i>
