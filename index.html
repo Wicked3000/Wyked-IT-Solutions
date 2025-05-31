@@ -377,46 +377,25 @@
             background-color: #1e40af;
         }
         
-        /* New Payment Details Section Styles */
-        .payment-details {
-            margin-top: 20px; /* Space above this section if it's placed after contact info in a single column layout */
-            /* If it's a grid item like contact-info, remove margin-top here and let gap handle it */
-        }
-
-        .payment-details h3 {
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-            color: var(--primary);
-            text-align: center; 
-        }
-
-        .payment-card {
+        /* Dynamic Payment Details within form */
+        #paymentDetailsDisplay {
             background-color: #f8fafc;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 5px;
             border: 1px solid #e2e8f0;
-        }
-
-        .payment-card h4 {
+            margin-bottom: 20px; /* Space between payment details and next form element */
+            font-size: 0.9rem;
+            line-height: 1.6;
             color: var(--dark);
-            font-size: 1.2rem;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+        }
+        #paymentDetailsDisplay p {
+            margin-bottom: 5px;
+        }
+        #paymentDetailsDisplay p:last-child {
+            margin-bottom: 0;
         }
 
-        .payment-card h4 i {
-            margin-right: 10px;
-            color: var(--secondary);
-        }
-
-        .payment-card p {
-            font-size: 0.95rem;
-            line-height: 1.8;
-            color: #475569;
-        }
 
         .contact-form input,
         .contact-form textarea,
@@ -500,17 +479,6 @@
             .contact-container {
                 grid-template-columns: 1fr; /* Stacks content vertically */
             }
-
-            /* Order elements for mobile if desired: contact info, then payment details, then form */
-            .contact-info {
-                order: 0; /* Stays first */
-            }
-            .payment-details {
-                order: 1; /* Appears after contact info */
-            }
-            .contact-form {
-                order: 2; /* Appears last */
-            }
         }
     </style>
 </head>
@@ -519,15 +487,15 @@
         <div class="container">
             <nav>
                 <div class="logo">Wyked <span>IT Solutions</span></div>
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
                 <div class="nav-links">
                     <a href="#services">Services</a>
                     <a href="#about">About</a>
                     <a href="#testimonials">Reviews</a>
                     <a href="#contact">Contact</a>
                 </div>
-                <button class="mobile-menu-btn">
-                    <i class="fas fa-bars"></i>
-                </button>
             </nav>
         </div>
     </header>
@@ -760,7 +728,7 @@
                         <p><i class="fas fa-phone"></i> +675 123 4567</p>
                         <p><i class="fas fa-envelope"></i> support@wykeditsolutions.pg</p>
                         <p><i class="fas fa-clock"></i> Mon-Sat: 8am - 6pm</p>
-                        <p><i class="fas fa-wallet"></i> All prices in PGK. We accept **Cash** and **Bank Transfer**. See details below.</p>
+                        <p><i class="fas fa-wallet"></i> All prices in PGK. We accept Cash and Bank Transfer.</p>
                     </div>
                     <h3>Follow Us</h3>
                     <div class="social-links">
@@ -768,25 +736,7 @@
                         <a href="#"><i class="fab fa-whatsapp"></i></a>
                     </div>
                 </div>
-
-                <div class="payment-details">
-                    <h3>Payment Methods</h3>
-                    <div class="payment-card">
-                        <h4><i class="fas fa-money-bill-wave"></i> Cash Payment</h4>
-                        <p>Accepted for all services. Please ensure you have the exact amount ready if possible, especially for on-site services. Change might be limited at times.</p>
-                    </div>
-                    <div class="payment-card">
-                        <h4><i class="fas fa-bank"></i> Bank Transfer (EFT)</h4>
-                        <p>For your convenience, we also accept payments via Bank Transfer. Payments must be processed *before* or *immediately after* service completion.</p>
-                        <p>
-                            **Bank Name:** Example PNG Bank<br>
-                            **Account Name:** Wyked IT Solutions Ltd<br>
-                            **Account Number:** 1234567890<br>
-                            **BSB:** 088-000 (Example)<br>
-                            *Please use your Name or Invoice Number as the payment reference.*
-                        </p>
-                    </div>
-                </div>
+                
                 <div class="contact-form">
                     <form id="serviceRequestForm">
                         <input type="text" id="name" name="name" placeholder="Your Name" required>
@@ -814,6 +764,8 @@
                             <option value="Cash">Cash</option>
                             <option value="Bank Transfer">Bank Transfer</option>
                         </select>
+                        <div id="paymentDetailsDisplay">
+                            </div>
                         <textarea id="message" name="message" placeholder="Describe your issue or request"></textarea>
                         <button type="submit" class="btn">Request Service via WhatsApp</button>
                     </form>
@@ -881,7 +833,44 @@
             
             // Change slide every 5 seconds
             setInterval(nextSlide, 5000);
+
+            // Initialize payment details display
+            displayPaymentDetails(); // Call on load to hide/show initially
         });
+
+        // NEW: Function to display payment details based on selection
+        const paymentMethodSelect = document.getElementById('paymentMethod');
+        const paymentDetailsDisplay = document.getElementById('paymentDetailsDisplay');
+
+        function displayPaymentDetails() {
+            const selectedMethod = paymentMethodSelect.value;
+            let detailsHtml = '';
+
+            if (selectedMethod === 'Cash') {
+                detailsHtml = `
+                    <p><strong><i class="fas fa-money-bill-wave"></i> Cash Payment:</strong></p>
+                    <p>Accepted for all services. Please ensure you have the exact amount ready if possible, especially for on-site services. Change might be limited at times.</p>
+                `;
+            } else if (selectedMethod === 'Bank Transfer') {
+                detailsHtml = `
+                    <p><strong><i class="fas fa-bank"></i> Bank Transfer (EFT) Details:</strong></p>
+                    <p>For your convenience, we also accept payments via Bank Transfer. Payments must be processed *before* or *immediately after* service completion.</p>
+                    <p>
+                        **Bank Name:** Example PNG Bank<br>
+                        **Account Name:** Wyked IT Solutions Ltd<br>
+                        **Account Number:** 1234567890<br>
+                        **BSB:** 088-000 (Example)<br>
+                        *Please use your Name or Invoice Number as the payment reference.*
+                    </p>
+                `;
+            }
+
+            paymentDetailsDisplay.innerHTML = detailsHtml;
+        }
+
+        // Add event listener for payment method change
+        paymentMethodSelect.addEventListener('change', displayPaymentDetails);
+
 
         // WhatsApp Form Submission
         function sendToWhatsApp(event) {
@@ -891,11 +880,11 @@
             const email = document.getElementById('email').value;
             const phone = document.getElementById('phone').value;
             const service = document.getElementById('service').value;
-            const paymentMethod = document.getElementById('paymentMethod').value; // Get selected payment method
+            const paymentMethod = document.getElementById('paymentMethod').value; 
             const message = document.getElementById('message').value;
             
             // Validate required fields
-            if (!name || !phone || !service || !paymentMethod) { // Added paymentMethod to validation
+            if (!name || !phone || !service || !paymentMethod) { 
                 alert('Please fill in all required fields (Name, Phone, Service, and Preferred Payment Method).');
                 return false;
             }
@@ -926,6 +915,8 @@ Please respond to this inquiry at your earliest convenience.`;
             
             // Optional: Reset form after submission
             document.getElementById('serviceRequestForm').reset();
+            // Reset payment details display after form reset
+            paymentDetailsDisplay.innerHTML = ''; 
             
             return false;
         }
