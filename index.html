@@ -1078,48 +1078,50 @@ Please respond to this inquiry at your earliest convenience.`;
 
             // Add event listener to form
             document.getElementById('serviceRequestForm').addEventListener('submit', sendToWhatsApp);
-        </script>
-<script>
-            var url = 'https://cdn.waplus.io/waplus-crm/settings/ossembed.js';
-            var s = document.createElement('script');
-            s.type = 'text/javascript';
-            s.async = true;
-            s.src = url;
-            var options = {
-                "enabled": true,
-                "chatButtonSetting": {
-                    "backgroundColor": "#16BE45",
-                    "ctaText": "Message Us",
-                    "borderRadius": "8",
-                    "marginLeft": "20",
-                    "marginBottom": "20",
-                    "marginRight": "20",
-                    "position": "right",
-                    "textColor": "#ffffff",
-                    "phoneNumber": "", // This might be overridden by brandSetting.phoneNumber
-                    "messageText": "👋🏻Hello",
-                    "trackClick": true
-                },
-                "brandSetting": {
-                    "brandName": "WAPlus Team", // This will be the name shown in the chat header
-                    "brandSubTitle": "Replies within 1 day", // Subtitle in the chat header
-                    "headerTextColor": "#ffffff", // Corrected the extra '+'
-                    "brandImg": "https://scrm-data-us-oss.oss-us-west-1.aliyuncs.com/sender/whatsapp_replace_crisp/logo.png", // Your brand logo for the chat header
-                    "welcomeText": "Hi, there!\nHow can I help you?", // Initial message when chat is opened
-                    "messageText": "Hello, I have a question about {{page_link}}", // Pre-filled message for the user to send
-                    "backgroundColor": "#0a5f54", // Chat header background color
-                    "ctaText": "Start Chat", // Text on the "Start Chat" button inside the widget
-                    "borderRadius": "20",
-                    "autoShow": false, // Set to true if you want it to pop up automatically
-                    "btnColor": "#16BE45", // The color of the main floating button
-                    "phoneNumber": "+67581908393", // Your WhatsApp number with country code and +
-                    "trackClick": true
-                }
-            }
-            s.onload = function() {
-                CreateWhatsappChatWidget(options);
-            };
-            
+    
+            <script>
+var url = 'https://cdn.waplus.io/waplus-crm/settings/ossembed.js';
+var s = document.createElement('script');
+s.type = 'text/javascript';
+s.async = true;
+s.src = url;
+var options = {
+"enabled": true,
+"chatButtonSetting": {
+"backgroundColor": "#16BE45",
+"ctaText": "Message Us",
+"borderRadius": "8",
+"marginLeft": "20",
+"marginBottom": "20",
+"marginRight": "20",
+"position": "right",
+"textColor": "#ffffff",
+"phoneNumber": "",
+"messageText": "👋🏻Hello",
+"trackClick": true
+},
+"brandSetting": {
+"brandName": "Wyked IT Solutions",
+"brandSubTitle": "Replies within 1 day",
+"headerTextColor": "#fff",
+"brandImg": "https://i.ibb.co/L7NFyXD/Untitled33-20250531133340.png",
+"welcomeText": "Hi,there!\nHow can I help you?",
+"messageText": "Hello, I have a question about {{page_link}}",
+"backgroundColor": "#0a5f54",
+"ctaText": "Start Chat",
+"borderRadius": "20",
+"autoShow": false,
+"btnColor": "#16BE45",
+"phoneNumber": "+65781908393",
+"trackClick": true
+}
+}
+s.onload = function() {
+CreateWhatsappChatWidget(options);
+};
+var x = document.getElementsByTagName('script')[0];
+x.parentNode.insertBefore(s, x);
+</script>
         
 </body>
 </html>
