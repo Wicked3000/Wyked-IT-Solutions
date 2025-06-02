@@ -9,13 +9,18 @@
     <style>
         :root {
             --primary: #2563eb;
+            --primary-dark: #1e40af;
             --secondary: #059669;
             --accent: #ea580c;
+            --accent-dark: #c2410c;
             --dark: #1e293b;
             --light: #f8fafc;
+            --gray-light: #e2e8f0;
+            --gray-medium: #94a3b8;
+            --gray-dark: #64748b;
         }
         
-        {
+        * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -26,6 +31,7 @@
             line-height: 1.6;
             color: var(--dark);
             background-color: #f1f5f9;
+            overflow-x: hidden;
         }
         
         .container {
@@ -48,43 +54,61 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 0;
+            padding: 15px 0;
         }
         
         .logo {
-            display: flex; /* Makes the logo image and text sit side-by-side */
-            align-items: center; /* Vertically centers the items within the logo div */
-            font-size: 24px; /* Base font size for the text part */
+            display: flex;
+            align-items: center;
+            font-size: 20px;
             font-weight: 700;
             color: var(--primary);
-            gap: 8px; /* Adds a small gap between the image and the text */
+            gap: 8px;
+            text-decoration: none;
         }
 
         .logo span {
-            color: var(--accent); /* Styles "IT Solutions" */
+            color: var(--accent);
         }
         
-        /* Styles for the logo image */
         .header-logo {
-            max-height: 50px; /* Adjust this value as needed */
-            width: auto;      /* Maintain aspect ratio */
-            display: block;   /* Ensures image behaves well in flex container */
+            max-height: 40px;
+            width: auto;
+            display: block;
         }
 
         .nav-links {
             display: flex;
-            gap: 30px;
+            gap: 25px;
         }
         
         .nav-links a {
             text-decoration: none;
             color: var(--dark);
             font-weight: 600;
-            transition: color 0.3s;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            padding: 5px 0;
+            position: relative;
         }
         
         .nav-links a:hover {
             color: var(--primary);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
         }
         
         .mobile-menu-btn {
@@ -93,6 +117,7 @@
             border: none;
             font-size: 24px;
             cursor: pointer;
+            color: var(--primary);
         }
         
         /* Hero Section */
@@ -100,6 +125,7 @@
             position: relative;
             height: 80vh;
             min-height: 500px;
+            max-height: 800px;
             overflow: hidden;
             color: white;
             text-align: center;
@@ -122,6 +148,7 @@
             height: 100%;
             background-size: cover;
             background-position: center;
+            background-repeat: no-repeat;
             opacity: 0;
             transition: opacity 1s ease-in-out;
         }
@@ -130,16 +157,29 @@
             opacity: 1;
         }
         
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 0;
+        }
+        
         .hero-content {
             position: relative;
             z-index: 1;
             width: 100%;
+            padding: 0 20px;
         }
         
         .hero h1 {
             font-size: 2.5rem;
             margin-bottom: 20px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            line-height: 1.3;
         }
         
         .hero p {
@@ -157,11 +197,15 @@
             border-radius: 5px;
             text-decoration: none;
             font-weight: 600;
-            transition: background-color 0.3s;
+            transition: all 0.3s ease;
+            border: 2px solid var(--accent);
+            cursor: pointer;
         }
         
         .btn:hover {
-            background-color: #c2410c;
+            background-color: var(--accent-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
         
         .btn-outline {
@@ -178,6 +222,7 @@
         /* Services Section */
         .services {
             padding: 80px 0;
+            background-color: white;
         }
         
         .section-title {
@@ -204,12 +249,18 @@
             background-color: var(--primary);
         }
         
+        .section-title p {
+            color: var(--gray-dark);
+            margin-top: 10px;
+        }
+        
         .service-category {
             margin-bottom: 50px;
             background: white;
             padding: 30px;
             border-radius: 8px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border: 1px solid var(--gray-light);
         }
         
         .service-category h3 {
@@ -217,12 +268,13 @@
             font-size: 1.5rem;
             margin-bottom: 20px;
             padding-bottom: 10px;
-            border-bottom: 2px solid #e2e8f0;
+            border-bottom: 2px solid var(--gray-light);
         }
         
         .services-table {
             width: 100%;
             border-collapse: collapse;
+            margin-bottom: 20px;
         }
         
         .services-table th {
@@ -230,19 +282,21 @@
             color: white;
             padding: 12px;
             text-align: left;
+            font-weight: 500;
         }
         
         .services-table td {
             padding: 12px;
-            border-bottom: 1px solid #e2e8f0;
+            border-bottom: 1px solid var(--gray-light);
+            vertical-align: middle;
         }
         
         .services-table tr:nth-child(even) {
-            background-color: #f8fafc;
+            background-color: var(--light);
         }
         
         .services-table tr:hover {
-            background-color: #f1f5f9;
+            background-color: #e6f0ff;
         }
         
         .price-tag {
@@ -252,12 +306,14 @@
             padding: 4px 10px;
             border-radius: 4px;
             font-weight: 600;
+            font-size: 0.9rem;
+            white-space: nowrap;
         }
         
         /* About Section */
         .about {
             padding: 80px 0;
-            background-color: white;
+            background-color: var(--light);
         }
         
         .about-content {
@@ -273,22 +329,37 @@
             color: var(--dark);
         }
         
+        .about-text p {
+            margin-bottom: 15px;
+            color: var(--gray-dark);
+        }
+        
         .about-img {
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .about-img:hover {
+            transform: translateY(-5px);
         }
         
         .about-img img {
             width: 100%;
             height: auto;
             display: block;
+            transition: transform 0.5s ease;
+        }
+        
+        .about-img:hover img {
+            transform: scale(1.03);
         }
         
         /* Testimonials */
         .testimonials {
             padding: 80px 0;
-            background-color: #f1f5f9;
+            background-color: white;
         }
         
         .testimonial-grid {
@@ -302,11 +373,30 @@
             padding: 30px;
             border-radius: 8px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border: 1px solid var(--gray-light);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
         }
         
         .testimonial-card p {
             font-style: italic;
             margin-bottom: 20px;
+            color: var(--gray-dark);
+            position: relative;
+        }
+        
+        .testimonial-card p::before {
+            content: '"';
+            font-size: 3rem;
+            color: var(--primary);
+            opacity: 0.2;
+            position: absolute;
+            top: -15px;
+            left: -10px;
         }
         
         .testimonial-author {
@@ -320,28 +410,37 @@
             border-radius: 50%;
             background-color: #ddd;
             margin-right: 15px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--primary);
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
         }
         
         .author-info h4 {
             font-size: 1.1rem;
             margin-bottom: 5px;
+            color: var(--dark);
         }
         
         .author-info p {
             font-style: normal;
-            color: #64748b;
+            color: var(--gray-medium);
             font-size: 0.9rem;
         }
         
         /* Contact Section */
         .contact {
             padding: 80px 0;
-            background-color: white;
+            background-color: var(--light);
         }
         
         .contact-container {
             display: grid;
-            grid-template-columns: 1fr 1fr; /* Default for larger screens */
+            grid-template-columns: 1fr 1fr;
             gap: 50px;
         }
         
@@ -359,11 +458,14 @@
             margin-bottom: 15px;
             display: flex;
             align-items: center;
+            color: var(--gray-dark);
         }
         
         .contact-details i {
             margin-right: 10px;
             color: var(--primary);
+            width: 20px;
+            text-align: center;
         }
         
         .social-links {
@@ -380,52 +482,83 @@
             background-color: var(--primary);
             color: white;
             border-radius: 50%;
-            transition: background-color 0.3s;
+            transition: all 0.3s ease;
+            text-decoration: none;
         }
         
         .social-links a:hover {
-            background-color: #1e40af;
+            background-color: var(--primary-dark);
+            transform: translateY(-3px);
         }
         
         /* Dynamic Payment Details within form */
         #paymentDetailsDisplay {
-            background-color: #f8fafc;
+            background-color: var(--light);
             padding: 15px;
             border-radius: 5px;
-            border: 1px solid #e2e8f0;
-            margin-bottom: 20px; /* Space between payment details and next form element */
+            border: 1px solid var(--gray-light);
+            margin-bottom: 20px;
             font-size: 0.9rem;
             line-height: 1.6;
             color: var(--dark);
             box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
         }
+        
+        #paymentDetailsDisplay:hover {
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
         #paymentDetailsDisplay p {
             margin-bottom: 5px;
         }
+        
         #paymentDetailsDisplay p:last-child {
             margin-bottom: 0;
         }
-
-
+        
+        #paymentDetailsDisplay strong {
+            color: var(--primary);
+        }
+        
+        .contact-form {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border: 1px solid var(--gray-light);
+        }
+        
         .contact-form input,
         .contact-form textarea,
         .contact-form select {
             width: 100%;
             padding: 12px 15px;
             margin-bottom: 20px;
-            border: 1px solid #ddd;
+            border: 1px solid var(--gray-light);
             border-radius: 5px;
             font-family: inherit;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-form input:focus,
+        .contact-form textarea:focus,
+        .contact-form select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
         }
         
         .contact-form textarea {
             height: 150px;
             resize: vertical;
         }
-
+        
         .contact-form button[type="submit"] {
             width: 100%;
             cursor: pointer;
+            border: none;
         }
         
         /* Footer */
@@ -439,14 +572,16 @@
         .footer-links {
             display: flex;
             justify-content: center;
-            gap: 30px;
+            flex-wrap: wrap;
+            gap: 20px 30px;
             margin-bottom: 30px;
         }
         
         .footer-links a {
             color: white;
             text-decoration: none;
-            transition: color 0.3s;
+            transition: color 0.3s ease;
+            font-size: 15px;
         }
         
         .footer-links a:hover {
@@ -454,53 +589,219 @@
         }
         
         .copyright {
-            color: #94a3b8;
+            color: var(--gray-medium);
             font-size: 0.9rem;
         }
         
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 20px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 99;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-3px);
+        }
+        
+        /* Loading Animation */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255,255,255,0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+        
+        .loader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .loader-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid var(--gray-light);
+            border-radius: 50%;
+            border-top-color: var(--primary);
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Form Success Message */
+        .form-success {
+            display: none;
+            background-color: var(--secondary);
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
         /* Responsive Styles */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .about-content {
+                gap: 30px;
+            }
+        }
+        
         @media (max-width: 768px) {
             .nav-links {
-                display: none;
+                position: fixed;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background-color: white;
+                flex-direction: column;
+                align-items: center;
+                padding: 20px 0;
+                gap: 15px;
+                box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+                transform: translateY(-150%);
+                transition: transform 0.3s ease;
+                z-index: 99;
+            }
+            
+            .nav-links.active {
+                transform: translateY(0);
             }
             
             .mobile-menu-btn {
                 display: block;
             }
             
+            .hero {
+                height: 70vh;
+            }
+            
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
             .about-content {
                 grid-template-columns: 1fr;
             }
             
-            .hero {
-                height: 60vh;
+            .about-img {
+                order: -1;
             }
             
-            .hero h1 {
-                font-size: 2rem;
+            .contact-container {
+                grid-template-columns: 1fr;
             }
             
             .services-table {
                 display: block;
                 overflow-x: auto;
+                white-space: nowrap;
             }
-
-            /* For contact section on smaller screens */
-            .contact-container {
-                grid-template-columns: 1fr; /* Stacks content vertically */
+            
+            .back-to-top {
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero {
+                height: 60vh;
+                min-height: 400px;
+            }
+            
+            .hero h1 {
+                font-size: 1.6rem;
+                margin-bottom: 15px;
+            }
+            
+            .btn {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+            
+            .service-category {
+                padding: 20px;
+            }
+            
+            .section-title h2 {
+                font-size: 1.6rem;
+            }
+            
+            .testimonial-card {
+                padding: 20px;
+            }
+            
+            .contact-form {
+                padding: 20px;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 15px;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Loading Animation -->
+    <div class="loader">
+        <div class="loader-spinner"></div>
+    </div>
+    
+    <!-- Back to Top Button -->
+    <a href="#" class="back-to-top" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+    
     <header>
         <div class="container">
             <nav>
-                <div class="logo">
+                <a href="#" class="logo">
                     <img src="https://i.ibb.co/LhP5Bz63/Untitled33-20250531211552.png" alt="Wyked IT Solutions Logo" class="header-logo">
                     Wyked <span>IT Solutions</span>
-                </div>
-                <button class="mobile-menu-btn">
+                </a>
+                <button class="mobile-menu-btn" aria-label="Toggle navigation">
                     <i class="fas fa-bars"></i>
                 </button>
                 <div class="nav-links">
@@ -535,132 +836,138 @@
             
             <div class="service-category">
                 <h3>Computer Repair Services</h3>
-                <table class="services-table">
-                    <thead>
-                        <tr>
-                            <th>Service</th>
-                            <th>Price (PGK)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Virus & Malware Removal</td>
-                            <td><span class="price-tag">80 PGK</span></td>
-                        </tr>
-                        <tr>
-                            <td>Windows Password Reset</td>
-                            <td><span class="price-tag">50 PGK</span></td>
-                        </tr>
-                        <tr>
-                            <td>Data Recovery (Basic)</td>
-                            <td><span class="price-tag">100 PGK</span></td>
-                        </tr>
-                        <tr>
-                            <td>System Backup or Cloning</td>
-                            <td><span class="price-tag">150 PGK</span></td>
-                        </tr>
-                        <tr>
-                            <td>Partition Management</td>
-                            <td><span class="price-tag">80 PGK</span></td>
-                        </tr>
-                        <tr>
-                            <td>Disk Health Check & Report</td>
-                            <td><span class="price-tag">30 PGK</span></td>
-                        </tr>
-                        <tr>
-                            <td>Boot Repair (Windows Won't Start)</td>
-                            <td><span class="price-tag">80 PGK</span></td>
-                        </tr>
-                        <tr>
-                            <td>RAM & Hardware Testing</td>
-                            <td><span class="price-tag">50 PGK</span></td>
-                        </tr>
-                        <tr>
-                            <td>Windows Reinstallation (No Data Loss)</td>
-                            <td><span class="price-tag">150 PGK</span></td>
-                        </tr>
-                        <tr>
-                            <td>Windows Reinstallation (Full Format)</td>
-                            <td><span class="price-tag">120 PGK</span></td>
-                        </tr>
-                        <tr>
-                            <td>Secure Data Wipe</td>
-                            <td><span class="price-tag">60 PGK</span></td>
-                        </tr>
-                        <tr>
-                            <td>Driver Installation & Fixing</td>
-                            <td><span class="price-tag">50 PGK</span></td>
-                        </tr>
-                        <tr>
-                            <td>Basic Computer Tune-Up (Speed Boost)</td>
-                            <td><span class="price-tag">60 PGK</span></td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="services-table">
+                        <thead>
+                            <tr>
+                                <th>Service</th>
+                                <th>Price (PGK)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Virus & Malware Removal</td>
+                                <td><span class="price-tag">80 PGK</span></td>
+                            </tr>
+                            <tr>
+                                <td>Windows Password Reset</td>
+                                <td><span class="price-tag">50 PGK</span></td>
+                            </tr>
+                            <tr>
+                                <td>Data Recovery (Basic)</td>
+                                <td><span class="price-tag">100 PGK</span></td>
+                            </tr>
+                            <tr>
+                                <td>System Backup or Cloning</td>
+                                <td><span class="price-tag">150 PGK</span></td>
+                            </tr>
+                            <tr>
+                                <td>Partition Management</td>
+                                <td><span class="price-tag">80 PGK</span></td>
+                            </tr>
+                            <tr>
+                                <td>Disk Health Check & Report</td>
+                                <td><span class="price-tag">30 PGK</span></td>
+                            </tr>
+                            <tr>
+                                <td>Boot Repair (Windows Won't Start)</td>
+                                <td><span class="price-tag">80 PGK</span></td>
+                            </tr>
+                            <tr>
+                                <td>RAM & Hardware Testing</td>
+                                <td><span class="price-tag">50 PGK</span></td>
+                            </tr>
+                            <tr>
+                                <td>Windows Reinstallation (No Data Loss)</td>
+                                <td><span class="price-tag">150 PGK</span></td>
+                            </tr>
+                            <tr>
+                                <td>Windows Reinstallation (Full Format)</td>
+                                <td><span class="price-tag">120 PGK</span></td>
+                            </tr>
+                            <tr>
+                                <td>Secure Data Wipe</td>
+                                <td><span class="price-tag">60 PGK</span></td>
+                            </tr>
+                            <tr>
+                                <td>Driver Installation & Fixing</td>
+                                <td><span class="price-tag">50 PGK</span></td>
+                            </tr>
+                            <tr>
+                                <td>Basic Computer Tune-Up (Speed Boost)</td>
+                                <td><span class="price-tag">60 PGK</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
             
             <div class="service-category">
                 <h3>Setup & Support Services</h3>
-                <table class="services-table">
-                    <thead>
-                        <tr>
-                            <th>Service</th>
-                            <th>Price (PGK)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>New PC or Laptop Setup</td>
-                            <td><span class="price-tag">150 PGK</span></td>
-                        </tr>
-                        <tr>
-                            <td>Software Installation (e.g. Office)</td>
-                            <td><span class="price-tag">50 PGK</span></td>
-                        </tr>
-                        <tr>
-                            <td>Remote Support (Per Session)</td>
-                            <td><span class="price-tag">50 PGK</span></td>
-                        </tr>
-                        <tr>
-                            <td>Basic IT Training (1 Hour)</td>
-                            <td><span class="price-tag">80 PGK</span></td>
-                        </tr>
-                        <tr>
-                            <td>Network Setup (Wi-Fi or LAN)</td>
-                            <td><span class="price-tag">120 PGK</span></td>
-                        </tr>
-                        <tr>
-                            <td>Computer Diagnosis (No Fix Yet)</td>
-                            <td><span class="price-tag">30 PGK</span></td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="services-table">
+                        <thead>
+                            <tr>
+                                <th>Service</th>
+                                <th>Price (PGK)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>New PC or Laptop Setup</td>
+                                <td><span class="price-tag">150 PGK</span></td>
+                            </tr>
+                            <tr>
+                                <td>Software Installation (e.g. Office)</td>
+                                <td><span class="price-tag">50 PGK</span></td>
+                            </tr>
+                            <tr>
+                                <td>Remote Support (Per Session)</td>
+                                <td><span class="price-tag">50 PGK</span></td>
+                            </tr>
+                            <tr>
+                                <td>Basic IT Training (1 Hour)</td>
+                                <td><span class="price-tag">80 PGK</span></td>
+                            </tr>
+                            <tr>
+                                <td>Network Setup (Wi-Fi or LAN)</td>
+                                <td><span class="price-tag">120 PGK</span></td>
+                            </tr>
+                            <tr>
+                                <td>Computer Diagnosis (No Fix Yet)</td>
+                                <td><span class="price-tag">30 PGK</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
             
             <div class="service-category">
                 <h3>Additional Services</h3>
-                <table class="services-table">
-                    <thead>
-                        <tr>
-                            <th>Service</th>
-                            <th>Price (PGK)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>On-Site Service (In Town)</td>
-                            <td><span class="price-tag">30 PGK</span></td>
-                        </tr>
-                        <tr>
-                            <td>Device Pickup & Drop-off (Local Clients)</td>
-                            <td><span class="price-tag">40 PGK</span></td>
-                        </tr>
-                        <tr>
-                            <td>Out-of-Province Handling & Return Shipping</td>
-                            <td><span class="price-tag">80 PGK</span></td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="services-table">
+                        <thead>
+                            <tr>
+                                <th>Service</th>
+                                <th>Price (PGK)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>On-Site Service (In Town)</td>
+                                <td><span class="price-tag">30 PGK</span></td>
+                            </tr>
+                            <tr>
+                                <td>Device Pickup & Drop-off (Local Clients)</td>
+                                <td><span class="price-tag">40 PGK</span></td>
+                            </tr>
+                            <tr>
+                                <td>Out-of-Province Handling & Return Shipping</td>
+                                <td><span class="price-tag">80 PGK</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
             
             <div style="text-align: center; margin-top: 40px;">
@@ -680,7 +987,7 @@
                     <a href="#contact" class="btn-outline">Contact Us</a>
                 </div>
                 <div class="about-img">
-                    <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Our team">
+                    <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Our team" loading="lazy">
                 </div>
             </div>
         </div>
@@ -695,7 +1002,7 @@
                 <div class="testimonial-card">
                     <p>"I was quoted 300 PGK elsewhere for virus removal, but Wyked IT Solutions did it for just 80 PGK. Fast service and honest pricing!"</p>
                     <div class="testimonial-author">
-                        <div class="author-img"></div>
+                        <div class="author-img">D</div>
                         <div class="author-info">
                             <h4>David Oala</h4>
                             <p>Port Moresby</p>
@@ -706,7 +1013,7 @@
                 <div class="testimonial-card">
                     <p>"They recovered all my university assignments from a crashed laptop. The 100 PGK fee was worth every toea!"</p>
                     <div class="testimonial-author">
-                        <div class="author-img"></div>
+                        <div class="author-img">L</div>
                         <div class="author-info">
                             <h4>Lisa Kiap</h4>
                             <p>University of PNG</p>
@@ -717,7 +1024,7 @@
                 <div class="testimonial-card">
                     <p>"Fixed my shop's three computers in one day for a fair price. Now we can process orders again. Tenkyu tru!"</p>
                     <div class="testimonial-author">
-                        <div class="author-img"></div>
+                        <div class="author-img">P</div>
                         <div class="author-info">
                             <h4>Paul Wan</h4>
                             <p>Lae Business Owner</p>
@@ -745,13 +1052,16 @@
                     </div>
                     <h3>Follow Us</h3>
                     <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
                     </div>
                 </div>
                 
                 <div class="contact-form">
                     <form id="serviceRequestForm">
+                        <div class="form-success" id="formSuccess">
+                            Thank you! Your request has been submitted. We'll contact you shortly.
+                        </div>
                         <input type="text" id="name" name="name" placeholder="Your Name" required>
                         <input type="email" id="email" name="email" placeholder="Your Email">
                         <input type="tel" id="phone" name="phone" placeholder="Phone Number" required>
@@ -777,8 +1087,7 @@
                             <option value="Cash">Cash</option>
                             <option value="Bank Transfer">Bank Transfer</option>
                         </select>
-                        <div id="paymentDetailsDisplay">
-                        </div>
+                        <div id="paymentDetailsDisplay"></div>
                         <textarea id="message" name="message" placeholder="Describe your issue or request"></textarea>
                         <button type="submit" class="btn">Request Service via WhatsApp</button>
                     </form>
@@ -800,41 +1109,63 @@
     </footer>
 
     <script>
-        // Mobile Menu Toggle
-        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-        const navLinks = document.querySelector('.nav-links');
-        
-        mobileMenuBtn.addEventListener('click', () => {
-            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
-        });
-        
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
+        // Wait for the DOM to be fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Hide loader after page load
+            setTimeout(function() {
+                document.querySelector('.loader').classList.add('hidden');
+            }, 500);
+            
+            // Mobile Menu Toggle
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const navLinks = document.querySelector('.nav-links');
+            
+            mobileMenuBtn.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+                mobileMenuBtn.innerHTML = navLinks.classList.contains('active') ? 
+                    '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+            });
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                        
+                        // Close mobile menu if open
+                        if (window.innerWidth <= 768) {
+                            navLinks.classList.remove('active');
+                            mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                        }
+                        
+                        // Update URL without page reload
+                        if (targetId !== '#') {
+                            history.pushState(null, null, targetId);
+                        }
+                    }
                 });
-                
-                // Close mobile menu if open
-                if (window.innerWidth <= 768) {
-                    navLinks.style.display = 'none';
+            });
+            
+            // Back to Top Button
+            const backToTopBtn = document.querySelector('.back-to-top');
+            
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTopBtn.classList.add('visible');
+                } else {
+                    backToTopBtn.classList.remove('visible');
                 }
             });
-        });
-        
-        // Responsive adjustments
-        window.addEventListener('resize', () => {
-            if (window.innerWidth > 768) {
-                navLinks.style.display = 'flex';
-            } else {
-                navLinks.style.display = 'none';
-            }
-        });
-        
-        // Slideshow functionality
-        document.addEventListener('DOMContentLoaded', function() {
+            
+            // Slideshow functionality
             const slides = document.querySelectorAll('.slide');
             let currentSlide = 0;
             
@@ -845,85 +1176,127 @@
             }
             
             // Change slide every 5 seconds
-            setInterval(nextSlide, 5000);
-
-            // Initialize payment details display (call on load to ensure it's empty or shows default if needed)
-            displayPaymentDetails(); 
+            const slideInterval = setInterval(nextSlide, 5000);
+            
+            // Pause slideshow when hovering
+            const slideshow = document.querySelector('.slideshow');
+            slideshow.addEventListener('mouseenter', () => {
+                clearInterval(slideInterval);
+            });
+            
+            slideshow.addEventListener('mouseleave', () => {
+                setInterval(nextSlide, 5000);
+            });
+            
+            // Payment Method Details Display
+            const paymentMethodSelect = document.getElementById('paymentMethod');
+            const paymentDetailsDisplay = document.getElementById('paymentDetailsDisplay');
+            
+            function displayPaymentDetails() {
+                const selectedMethod = paymentMethodSelect.value;
+                let detailsHtml = '';
+                
+                if (selectedMethod === 'Cash') {
+                    detailsHtml = `
+                        <p><strong><i class="fas fa-money-bill-wave"></i> Cash Payment:</strong></p>
+                        <p>Accepted for all services. Please ensure you have the exact amount ready if possible, especially for on-site services. Change might be limited at times.</p>
+                    `;
+                } else if (selectedMethod === 'Bank Transfer') {
+                    detailsHtml = `
+                        <p><strong><i class="fas fa-bank"></i> Bank Transfer (EFT) Details:</strong></p>
+                        <p>For your convenience, we also accept payments via Bank Transfer. Payments must be processed <em>before</em> or <em>immediately after</em> service completion.</p>
+                        <p>
+                            <strong>Bank Name:</strong> Example PNG Bank<br>
+                            <strong>Account Name:</strong> Wyked IT Solutions Ltd<br>
+                            <strong>Account Number:</strong> 1234567890<br>
+                            <strong>BSB:</strong> 088-000 (Example)<br>
+                            <em>Please use your Name or Invoice Number as the payment reference.</em>
+                        </p>
+                    `;
+                }
+                
+                paymentDetailsDisplay.innerHTML = detailsHtml;
+            }
+            
+            // Initialize payment details display
+            displayPaymentDetails();
+            
+            // Add event listener for payment method change
+            paymentMethodSelect.addEventListener('change', displayPaymentDetails);
+            
+            // Form Submission
+            const serviceRequestForm = document.getElementById('serviceRequestForm');
+            const formSuccess = document.getElementById('formSuccess');
+            
+            serviceRequestForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const phone = document.getElementById('phone').value;
+                const service = document.getElementById('service').value;
+                const paymentMethod = document.getElementById('paymentMethod').value;
+                const message = document.getElementById('message').value;
+                
+                // Basic validation
+                if (!name || !phone || !service || !paymentMethod) {
+                    alert('Please fill in all required fields: Name, Phone Number, Service, and Payment Method.');
+                    return;
+                }
+                
+                // IMPORTANT: Replace this with your actual WhatsApp number for Wyked IT Solutions
+                const whatsappNumber = '+6751234567'; // Example: +67571234567 or similar
+                
+                let whatsappMessage = `Hello Wyked IT Solutions,%0A%0AI'd like to request a service.%0A%0A`;
+                whatsappMessage += `*Name:* ${name}%0A`;
+                whatsappMessage += `*Phone:* ${phone}%0A`;
+                if (email) {
+                    whatsappMessage += `*Email:* ${email}%0A`;
+                }
+                whatsappMessage += `*Requested Service:* ${service}%0A`;
+                whatsappMessage += `*Payment Method:* ${paymentMethod}%0A`;
+                if (message) {
+                    whatsappMessage += `*Issue/Details:* ${message}%0A`;
+                }
+                whatsappMessage += `%0AThank you!`;
+                
+                const whatsappURL = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
+                
+                // Show success message
+                formSuccess.style.display = 'block';
+                serviceRequestForm.reset();
+                paymentDetailsDisplay.innerHTML = '';
+                
+                // Scroll to success message
+                formSuccess.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                
+                // Open WhatsApp in a new tab after a short delay
+                setTimeout(() => {
+                    window.open(whatsappURL, '_blank');
+                }, 1000);
+            });
+            
+            // Responsive adjustments
+            function handleResize() {
+                if (window.innerWidth > 768) {
+                    navLinks.classList.remove('active');
+                    mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                }
+            }
+            
+            window.addEventListener('resize', handleResize);
+            
+            // Initialize with correct mobile menu state
+            handleResize();
+            
+            // Lazy loading for images
+            if ('loading' in HTMLImageElement.prototype) {
+                const images = document.querySelectorAll('img[loading="lazy"]');
+                images.forEach(img => {
+                    img.src = img.dataset.src;
+                });
+            }
         });
-
-        // Function to display payment details based on selection
-        const paymentMethodSelect = document.getElementById('paymentMethod');
-        const paymentDetailsDisplay = document.getElementById('paymentDetailsDisplay');
-
-        function displayPaymentDetails() {
-            const selectedMethod = paymentMethodSelect.value;
-            let detailsHtml = '';
-
-            if (selectedMethod === 'Cash') {
-                detailsHtml = `
-                    <p><strong><i class="fas fa-money-bill-wave"></i> Cash Payment:</strong></p>
-                    <p>Accepted for all services. Please ensure you have the exact amount ready if possible, especially for on-site services. Change might be limited at times.</p>
-                `;
-            } else if (selectedMethod === 'Bank Transfer') {
-                detailsHtml = `
-                    <p><strong><i class="fas fa-bank"></i> Bank Transfer (EFT) Details:</strong></p>
-                    <p>For your convenience, we also accept payments via Bank Transfer. Payments must be processed *before* or *immediately after* service completion.</p>
-                    <p>
-                        **Bank Name:** Example PNG Bank<br>
-                        **Account Name:** Wyked IT Solutions Ltd<br>
-                        **Account Number:** 1234567890<br>
-                        **BSB:** 088-000 (Example)<br>
-                        *Please use your Name or Invoice Number as the payment reference.*
-                    </p>
-                `;
-            }
-
-            paymentDetailsDisplay.innerHTML = detailsHtml;
-        }
-
-        // Add event listener for payment method change
-        paymentMethodSelect.addEventListener('change', displayPaymentDetails);
-
-
-        // WhatsApp Form Submission
-        function sendToWhatsApp(event) {
-            event.preventDefault();
-            
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const phone = document.getElementById('phone').value;
-            const service = document.getElementById('service').value;
-            const message = document.getElementById('message').value;
-
-            // Basic validation
-            if (!name || !phone || !service) {
-                alert('Please fill in your Name, Phone Number, and select a Service.');
-                return;
-            }
-
-            // IMPORTANT: Replace this with your actual WhatsApp number for Wyked IT Solutions
-            const whatsappNumber = '+6751234567'; // Example: +67571234567 or similar
-
-            let whatsappMessage = `Hello Wyked IT Solutions,%0A%0AI'd like to request a service.%0A%0A`;
-            whatsappMessage += `*Name:* ${name}%0A`;
-            whatsappMessage += `*Phone:* ${phone}%0A`;
-            if (email) { // Only add email if provided
-                whatsappMessage += `*Email:* ${email}%0A`;
-            }
-            whatsappMessage += `*Requested Service:* ${service}%0A`;
-            if (message) { // Only add message if provided
-                whatsappMessage += `*Issue/Details:* ${message}%0A`;
-            }
-            whatsappMessage += `%0AThank you!`;
-
-            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
-            
-            // Open WhatsApp in a new tab
-            window.open(whatsappURL, '_blank');
-        }
-
-        // Add event listener to the form's submit button
-        document.getElementById('serviceRequestForm').addEventListener('submit', sendToWhatsApp);
     </script>
 </body>
 </html>
